@@ -15,8 +15,10 @@ namespace DemoProject
 
         static void Main(string[] args)
         {
+            FreshFruits freshFruits = new FreshFruits();
             var currentDir = Directory.GetCurrentDirectory();
-            List<Fruit> freshFruits = new List<Fruit>();
+
+            freshFruits.Add(new Fruit("banana", "yellow"));
 
             ShowFruitWithColor(freshFruits, "");
 
@@ -28,16 +30,6 @@ namespace DemoProject
             {
                 SerializerHelper.ObjectToXml<Fruit>(fFruit);
             }
-        }
-
-        private static string ListToString(IEnumerable<Fruit> sortedfruits)
-        {
-            string stringFruits = "";
-            foreach (var fruit in sortedfruits)
-            {
-                stringFruits += $"{fruit}\n";
-            }
-            return stringFruits;
         }
 
         private static void ShowFruitWithColor(List<Fruit> freshFruits, string color)

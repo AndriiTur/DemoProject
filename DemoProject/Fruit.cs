@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 namespace DemoProject
 {
     [XmlRoot("FreshFruits")]
-    public class Fruit: IComparable<Fruit>
+    public class Fruit
     {
         private string name;
         private string color;
@@ -36,7 +36,6 @@ namespace DemoProject
             set
             {
                 color = value.ToLower();
-
             }
         }
 
@@ -52,22 +51,22 @@ namespace DemoProject
 
         public virtual void Input(string path)
         {
-            FileHelper.StringToFile(path, this.ToString());
+            FileHelper.FileToString(path);
         }
 
         public virtual void Output()
         {
-            //write to console-file
+            Console.WriteLine($"\n{this}");
+        }
+
+        public virtual void Output(string path)
+        {
+            FileHelper.StringToFile(path, this.ToString());
         }
 
         public override string ToString()
         {
             return $"Fruit name:{this.name} fruit color: {this.color}";
-        }
-
-        public int CompareTo(Fruit other)
-        {
-            return this.name.CompareTo(other.name);
         }
     }
 }
