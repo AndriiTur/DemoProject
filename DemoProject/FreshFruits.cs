@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace DemoProject
 {
-    class FreshFruits
+    public class FreshFruits
     {
         private List<Fruit> fFruits;
 
@@ -50,7 +50,7 @@ namespace DemoProject
             }
         }
 
-        private string ListToString()
+        public string ListToString()
         {
             string stringFruits = "";
             foreach (var fruit in this.fFruits)
@@ -58,29 +58,6 @@ namespace DemoProject
                 stringFruits += $"{fruit.Name}-{fruit.Name}\n";
             }
             return stringFruits;
-        }
-
-        public void ListToFile(string path, )
-        {
-            FileHelper.StringToFile(path, ListToString());
-        }
-
-        public void FileToList(string path)
-        {
-            string[] fruits =  FileHelper.FileToString(path).Split(new char[] {'\n'});
-
-            for (int i =0; i < fruits.Length; i++)
-            {
-                string[] fruit = fruits[i].Split(new char[] { '-' });
-                if (fruit.Length == 2)
-                {
-                    this.Add(new Fruit(fruit[0], fruit[1]));
-                }
-                else if (fruit.Length == 3)
-                {
-                    this.Add(new Citrus(fruit[0], fruit[1], ToDouble(fruit[2])));
-                }
-            }
         }
 
         private double ToDouble(string value)///Dopusatu!!!!!!!!!!!!!!!!!!!!
