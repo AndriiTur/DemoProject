@@ -1,12 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace DemoProject
 {
+    //1) Утворити клас Фрукт, який містить:
+    //поля назва та колір,
+    //визначити конструктор з параметрами,
+    //віртуальні методи Input() та Print(), для зчитування даних з консолі та виведення даних на консоль, а також перевантажити варіанти введення-виведення з файлу.
+    //властивості для полів, 
+    //перевизначити метод ToString(). 
+
     [XmlRoot("FreshFruits")]
     public class Fruit
     {
@@ -49,19 +52,28 @@ namespace DemoProject
             this.Color = color;
         }
 
-        public virtual void Input(string path)
+        public virtual void Input()
         {
-            FileHelper.FileToString(path);
+            Console.Write("Fruit Name: ");
+            Name = Console.ReadLine();
+            Console.Write("Fruit Color: ");
+            Color = Console.ReadLine();
         }
 
-        public virtual void Output()
+        public virtual void Input(string[] fruit)
         {
-            Console.WriteLine($"\n{this}");
+            Name = fruit[0];
+            Color = fruit[1];
         }
 
-        public virtual void Output(string path)
+        public virtual void Print()
         {
-            FileHelper.StringToFile(path, this.ToString());
+            Console.WriteLine($"{this}");
+        }
+
+        public virtual void Print(string pathToFile)
+        {
+            FileHelper.StringToFile(pathToFile, $"{Name}/{Color}");
         }
 
         public override string ToString()

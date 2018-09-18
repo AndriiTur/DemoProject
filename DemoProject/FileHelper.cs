@@ -15,7 +15,7 @@ namespace DemoProject
 
         public static void StringToFile(string path, string str)
         {
-            File.WriteAllText(path, str);
+            File.AppendAllText(path, str);
         }
 
         public void ListToFile(string path, FreshFruits freshFruits)
