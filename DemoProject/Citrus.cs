@@ -7,57 +7,90 @@ using System.Xml.Serialization;
 
 namespace DemoProject
 {
+    //2) Утворити похідний від нього клас Цитрус, який має:
+    //поле - вміст вітаміну С в грамах, 
+    //конструктор з параметрами, 
+    //властивість, 
+    //перевизначені методи Input() та Print().
+
     [XmlRoot("FreshFruits")]
     public class Citrus : Fruit
     {
-        double concentrationVitaminC;
+        double vitaminC;
 
         [XmlAnyAttribute]
-        public double ConcentrationVitaminC
+        public double VitaminC
         {
             get
             {
-                return concentrationVitaminC;
+                return vitaminC;
             }
-            set
-            {
-                concentrationVitaminC = value;
-            }
+            private set {}
         }
+
+        
 
         public Citrus()
         {
         }
 
-        public Citrus(string name, string color, double concentrationVitaminC) : base(name, color)
+        public Citrus(string name, string color, double vitaminC) : base(name, color)
         {
-            this.concentrationVitaminC = concentrationVitaminC;
+            VitaminC = vitaminC;
         }
 
-        public override bool Equals(object obj)
+        private void SetVitaminC(string value)
         {
-            return base.Equals(obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
+            double resultValue = 0.0;
+            try
+            {
+                resultValue = double.Parse(value);
+            }
+            catch (FormatException e)
+            {
+                Console.Error.WriteLine(e.Message);
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Console.Error.WriteLine(e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+            }
+            VitaminC = resultValue;
         }
 
         public override void Input()
         {
-            SerializerHelper.ObjectToXml<Citrus>(this);
-            //read from console-file
+            Console.Write("Citrus Name: ");
+            Name = Console.ReadLine();
+            Console.Write("Citrus Color: ");
+            Color = Console.ReadLine();
+            Console.Write("Citrus VitaminC: ");
+            SetVitaminC(Console.ReadLine());
         }
 
-        public override void Output()
+        public override void Input(string[] fruit)
         {
-            //write to console-file
+            Name = fruit[0];
+            Color = fruit[1];
+            SetVitaminC(fruit[2]);
+        }
+
+        public override void Print()
+        {
+            Console.WriteLine($"{this}");
+        }
+
+        public override void Print(string pathToFile)
+        {
+            FileHelper.StringToFile(pathToFile, $"{Name}/{Color}/{VitaminC}");
         }
 
         public override string ToString()
         {
-            return $"Fruit name:{this.Name} fruit color: {this.Color} concentration Vitamin C: {this.ConcentrationVitaminC}";
+            return $"Fruit name:{this.Name} fruit color: {this.Color} concentration Vitamin C: {this.vitaminC}";
         }
     }
 }
