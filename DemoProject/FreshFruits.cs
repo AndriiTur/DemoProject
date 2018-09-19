@@ -7,14 +7,14 @@ using System.Xml.Serialization;
 
 namespace DemoProject
 {
-    public class FreshFruits
+    public class FruitsBasket
     {
         private List<Fruit> fFruits;
 
-        [XmlArray("FreshFruits"), XmlArrayItem(typeof(Fruit), ElementName = "")]
+        [XmlArray("FreshFruits"), XmlArrayItem(typeof(Fruit), ElementName = "FF")]
         public List<Fruit> FFruits { get => fFruits; set => fFruits = value; }
 
-        public FreshFruits()
+        public FruitsBasket()
         {
             fFruits = new List<Fruit>();
         }
@@ -34,26 +34,26 @@ namespace DemoProject
             this.fFruits.AddRange(fFruits);
         }
 
-        public void Sort(string sortedValue = "")
+        public IEnumerable<Fruit> Sort(string sortedValue = "")
         {
             if (sortedValue.ToLower() == "name")
             {
-                this.FFruits.OrderBy(f => f.Name);
+                return FFruits.OrderBy(f => f.Name);
             }
             else if (sortedValue.ToLower() == "color")
             {
-                this.FFruits.OrderBy(f => f.Color);
+                return FFruits.OrderBy(f => f.Color).ThenBy(f => f.Name);
             }
             else
             {
-                this.FFruits.OrderBy(f => f.Name);
+                return FFruits.OrderBy(f => f.Name);
             }
         }
 
-        public string ListToString()
+        public static string ListToString(IEnumerable<Fruit> fFruits)
         {
             string stringFruits = "";
-            foreach (var fruit in this.fFruits)
+            foreach (var fruit in fFruits)
             {
                 stringFruits += $"{fruit.Name}-{fruit.Name}\n";
             }
@@ -63,6 +63,11 @@ namespace DemoProject
         private double ToDouble(string value)///Dopusatu!!!!!!!!!!!!!!!!!!!!
         {
             return double.Parse(value);
+        }
+
+        internal IEnumerable<Fruit> ShowFruitWithColor(List<Fruit> fFruits, string color)
+        {
+            return this.FFruits.Where(f => f.Color == color.ToLower());
         }
     }
 }

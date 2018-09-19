@@ -56,7 +56,7 @@ namespace DemoProject
         {
             Console.Write("Fruit Name: ");
             Name = Console.ReadLine();
-            Console.Write("Fruit Color: ");
+            Console.Write($"Fruit Color {Name}: ");
             Color = Console.ReadLine();
         }
 
@@ -73,7 +73,7 @@ namespace DemoProject
 
         public virtual void Print(string pathToFile)
         {
-            FileHelper.StringToFile(pathToFile, $"{Name}/{Color}");
+            FileHelper.StringToFile(pathToFile, $"{Name}:{Color}");
         }
 
         public override string ToString()

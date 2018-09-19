@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace DemoProject
@@ -18,31 +19,38 @@ namespace DemoProject
             File.AppendAllText(path, str);
         }
 
-        public void ListToFile(string path, FreshFruits freshFruits)
+        public static void ListToFile(string path, FruitsBasket freshFruits)///!!!!!!!!!!!!!!
         {
-            FileHelper.StringToFile(path, freshFruits.ListToString());
+            FileHelper.StringToFile(path, freshFruits.ListToString((IEnumerable<Fruit>)freshFruits));
         }
 
-        public FreshFruits FileToList(string path)
+        public static FruitsBasket FileToList(string path)
         {
-            FreshFruits freshFruits = new FreshFruits();
+            FruitsBasket freshFruits = new FruitsBasket();
             string[] fruits = FileHelper.FileToString(path).Split(new char[] { '\n' });
 
             for (int i = 0; i < fruits.Length; i++)
             {
-                string[] fruit = fruits[i].Split(new char[] { '-' });
+                string[] fruit = fruits[i].Split(new char[] { '-',':' });
                 if (fruit.Length == 2)
                 {
-                    freshFruits.Add(new Fruit(fruit[0], fruit[1]));
+                    Fruit newFruit = new Fruit();
+                    newFruit.Input(fruit);
+                    freshFruits.Add(newFruit);
                 }
                 else if (fruit.Length == 3)
                 {
-                    freshFruits.Add(new Citrus(fruit[0], fruit[1], ToDouble(fruit[2])));
+                    Fruit newFruit = new Citrus();
+                    newFruit.Input(fruit);
+                    freshFruits.Add(newFruit);
                 }
             }
             return freshFruits;
         }
 
-
+        internal static bool CheckFile(string path)
+        {
+            return File.Exists(path) && File.ReadAllText(path).Length != 0;
+        }
     }
 }
