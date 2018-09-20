@@ -73,7 +73,7 @@ namespace DemoProject
             bool isSetted = false;
             Console.Write("Citrus Name: ");
             Name = Console.ReadLine();
-            Console.Write("Citrus Color: ");
+            Console.Write($"Citrus Color {Name}: ");
             Color = Console.ReadLine();
             Console.Write("Citrus VitaminC(double): ");
             isSetted = SetVitaminC(Console.ReadLine());
@@ -102,6 +102,7 @@ namespace DemoProject
 
         public override void Print(string pathToFile)
         {
+            FileHelper.StringToFile(pathToFile, $"{Name}:{Color}-{VitaminC}");
             FileHelper.SaveToFile(pathToFile, $"{Name}/{Color}/{VitaminC}");
         }
 

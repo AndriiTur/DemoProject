@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace DemoProject
@@ -18,14 +19,19 @@ namespace DemoProject
             File.AppendAllText(path, str);
         }
 
-        public FruitBasket LoadFromFile(string path)
+        public void ListToFile(string path, FreshFruits freshFruits)
         {
-            FruitBasket freshFruits = new FruitBasket();
+            FileHelper.StringToFile(path, freshFruits.ListToString());
+        }
+
+        public FreshFruits FileToList(string path)
+        {
+            FreshFruits freshFruits = new FreshFruits();
             string[] fruits = FileHelper.FileToString(path).Split(new char[] { '\n' });
 
             for (int i = 0; i < fruits.Length; i++)
             {
-                string[] fruit = fruits[i].Split(new char[] { '-' });
+                string[] fruit = fruits[i].Split(new char[] { '-',':' });
                 if (fruit.Length == 2)
                 {
                     Fruit newFruit = new Fruit();
@@ -41,5 +47,7 @@ namespace DemoProject
             }
             return freshFruits;
         }
+
+
     }
 }

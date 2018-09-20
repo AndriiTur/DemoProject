@@ -16,38 +16,61 @@ namespace DemoProject
 
     class Program
     {
-        public const string FreshFruitData = @"\freshFruits.txt";
+        public const string FreshFruitData = @"\FruitsBasket.txt";
         public const string SortedFruits = @"\sortedFruits.txt";
-        public const string FreshFruitXML = @"\freshFruits.xml";
+        public const string FreshFruitXML = @"\FruitsBasket.xml";
 
         static void Main(string[] args)
         {
-            FruitBasket freshFruits = new FruitBasket();
+            FruitsBasket fruitsBasket = new FruitsBasket();
             var currentDir = Directory.GetCurrentDirectory();
 
-            freshFruits.Add(new Fruit("banana", "yellow"));
-
-            freshFruits.ShowFruitWithColor(freshFruits, "yellow");
-
-            freshFruits.Sort();
-
-            FileHelper.StringToFile(currentDir + SortedFruits, ListToString(sortedfruits));
-
-            foreach (var fFruit in freshFruits)
+            if (FileHelper.CheckFile(FreshFruitData))
             {
-                SerializerHelper.ObjectToXml<Fruit>(fFruit);
+                //Load Fruits from File
+                fruitsBasket = FileHelper.FileToList(FreshFruitData);
             }
-        }
-
-        private static void ShowFruitWithColor(FruitBasket freshFruits, string color)
-        {
-            foreach (Fruit fFruit in freshFruits)
+            else
             {
-                if (fFruit.Color == color.ToLower())
+                //Load Fruits from Console
+                for (int i = 0; i < 5; i++)
                 {
-                    Console.WriteLine(fFruit);
+                    if (i < 3)
+                    {
+                        fruitsBasket.Add(new Fruit());
+                        fruitsBasket.FFruits[i].Input();
+                    }
+                    else
+                    {
+                        fruitsBasket.Add(new Citrus());
+                        fruitsBasket.FFruits[i].Input();
+                    }
                 }
             }
+
+            //Print list fruit with color
+            IEnumerable<Fruit> yellowFruits = fruitsBasket.ShowFruitWithColor(fruitsBasket.FFruits, "yellow");
+
+            foreach (var fruit in yellowFruits)
+            {
+                fruit.Print();
+            }
+
+            //Sort Fruits by parameter
+            IEnumerable<Fruit> sortedFruits = fruitsBasket.Sort();
+
+            //Print Sorted Fruits in File
+            FileHelper.StringToFile(SortedFruits, FruitsBasket.ListToString(sortedFruits));
+
+            //Print Sorted Fruits in console
+            foreach (var fruit in sortedFruits)
+            {
+                fruit.Print();
+            }
+
+            string fruitsBasketXML = SerializerHelper.ObjectToXml<FruitsBasket>(fruitsBasket);
+
+            FileHelper.StringToFile(FreshFruitXML, fruitsBasketXML);
         }
     }
 }

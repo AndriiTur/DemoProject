@@ -7,71 +7,67 @@ using System.Xml.Serialization;
 
 namespace DemoProject
 {
-    public class FruitBasket
+    public class FruitsBasket
     {
         private List<Fruit> fFruits;
 
-        [XmlArray("FreshFruits"), XmlArrayItem(typeof(Fruit), ElementName = "")]
+        [XmlArray("FreshFruits"), XmlArrayItem(typeof(Fruit), ElementName = "FF")]
         public List<Fruit> FFruits { get => fFruits; set => fFruits = value; }
 
-        public FruitBasket()
+        public FruitsBasket()
         {
             fFruits = new List<Fruit>();
         }
 
         public void Add(Fruit fruit)
         {
-            FFruits.Add(fruit);
+            this.FFruits.Add(fruit);
         }
 
         public void Remove(Fruit fruit)
         {
-            FFruits.Remove(fruit);
+            this.FFruits.Remove(fruit);
         }
 
         public void AddRank(List<Fruit> fFruits)
         {
-            FFruits.AddRange(fFruits);
+            this.fFruits.AddRange(fFruits);
         }
 
-        public void Sort(string sortedValue = "")
+        public IEnumerable<Fruit> Sort(string sortedValue = "")
         {
             if (sortedValue.ToLower() == "name")
             {
-                FFruits.OrderBy(f => f.Name);
+                return FFruits.OrderBy(f => f.Name);
             }
             else if (sortedValue.ToLower() == "color")
             {
-                FFruits.OrderBy(f => f.Color);
+                return FFruits.OrderBy(f => f.Color).ThenBy(f => f.Name);
             }
             else
             {
-                FFruits.OrderBy(f => f.Name);
+                return FFruits.OrderBy(f => f.Name);
             }
         }
 
-        internal void ShowFruitWithColor(string color)
+        public static string ListToString(IEnumerable<Fruit> fFruits)
         {
-            foreach (Fruit fruit in FFruits)
+            string stringFruits = "";
+            foreach (var fruit in fFruits)
             {
-                if (fruit.Color == color)
-                {
-                    Console.WriteLine(fruit);
-                }
+                stringFruits += $"{fruit.Name}-{fruit.Name}\n";
             }
-        }
-
-        public void PrintToFile(string path)
-        {
-            foreach (var fruit in this.fFruits)
-            {
-                fruit.Print(path);
-            }
+            return stringFruits;
         }
 
         private double ToDouble(string value)///Dopusatu!!!!!!!!!!!!!!!!!!!!
         {
             return double.Parse(value);
+        }
+
+        internal IEnumerable<Fruit> ShowFruitWithColor(List<Fruit> fFruits, string color)
+        {
+            return this.FFruits.Where(f => f.Color == color.ToLower());
         }
     }
 }
