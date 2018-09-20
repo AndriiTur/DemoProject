@@ -28,7 +28,7 @@ namespace DemoProject
             if (FileHelper.CheckFile(FreshFruitData))
             {
                 //Load Fruits from File
-                fruitsBasket = FileHelper.FileToList(FreshFruitData);
+                fruitsBasket = FileHelper.LoadFromFile(FreshFruitData);
             }
             else
             {
@@ -51,16 +51,22 @@ namespace DemoProject
             //Print list fruit with color
             IEnumerable<Fruit> yellowFruits = fruitsBasket.ShowFruitWithColor(fruitsBasket.FFruits, "yellow");
 
+            Console.WriteLine("");
+
             foreach (var fruit in yellowFruits)
             {
                 fruit.Print();
             }
 
             //Sort Fruits by parameter
-            IEnumerable<Fruit> sortedFruits = fruitsBasket.Sort();
+            IEnumerable<Fruit> sortedFruits = fruitsBasket.Sort("color");
+            //fruitsBasket.Sort();
 
             //Print Sorted Fruits in File
-            FileHelper.StringToFile(SortedFruits, FruitsBasket.ListToString(sortedFruits));
+            FileHelper.SaveToFile(SortedFruits, sortedFruits);
+            //FileHelper.SaveToFile(SortedFruits, fruitsBasket.FFruits);
+
+            Console.WriteLine("");
 
             //Print Sorted Fruits in console
             foreach (var fruit in sortedFruits)
@@ -70,7 +76,9 @@ namespace DemoProject
 
             string fruitsBasketXML = SerializerHelper.ObjectToXml<FruitsBasket>(fruitsBasket);
 
-            FileHelper.StringToFile(FreshFruitXML, fruitsBasketXML);
+            FileHelper.SaveXMLToFile(FreshFruitXML, fruitsBasketXML);
+
+            Console.ReadKey();
         }
     }
 }

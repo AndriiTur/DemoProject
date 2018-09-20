@@ -11,11 +11,13 @@ namespace DemoProject
     //перевизначити метод ToString(). 
 
     [XmlRoot("FreshFruits")]
-    public class Fruit
+    public class Fruit: IComparable<Fruit>
     {
+        //Fields
         private string name;
         private string color;
 
+        //Properties
         [XmlAnyAttribute]
         public string Name
         {
@@ -25,7 +27,7 @@ namespace DemoProject
             }
             set
             {
-                name = value;
+                name = value.ToLower();
             }
         }
 
@@ -42,21 +44,23 @@ namespace DemoProject
             }
         }
 
+        //Constructors
         public Fruit()
         {
         }
 
         public Fruit(string name, string color)
         {
-            this.Name = name;
-            this.Color = color;
+            Name = name;
+            Color = color;
         }
 
+        //Methods Inputs
         public virtual void Input()
         {
             Console.Write("Fruit Name: ");
             Name = Console.ReadLine();
-            Console.Write($"Fruit Color {Name}: ");
+            Console.Write($"Enter \"{Name}\" Color: ");
             Color = Console.ReadLine();
         }
 
@@ -66,6 +70,7 @@ namespace DemoProject
             Color = fruit[1];
         }
 
+        //Methods Prints
         public virtual void Print()
         {
             Console.WriteLine($"{this}");
@@ -73,12 +78,17 @@ namespace DemoProject
 
         public virtual void Print(string pathToFile)
         {
-            FileHelper.StringToFile(pathToFile, $"{Name}:{Color}");
+            FileHelper.SaveToFile(pathToFile, $"{Name}/{Color}");
         }
 
         public override string ToString()
         {
-            return $"Fruit name:{this.name} fruit color: {this.color}";
+            return $"Name:{Name} Color: {Color}";
+        }
+
+        public int CompareTo(Fruit other)
+        {
+            return this.Name.CompareTo(other.Name);
         }
     }
 }

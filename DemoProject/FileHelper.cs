@@ -14,19 +14,35 @@ namespace DemoProject
                 return "";
         }
 
+        public static void SaveXMLToFile(string path, string str)
+        {
+            File.WriteAllText(path, str);
+        }
+
         public static void SaveToFile(string path, string str)
         {
             File.AppendAllText(path, str);
         }
 
-        public void ListToFile(string path, FreshFruits freshFruits)
+        public static void SaveToFile(string path, List<Fruit> Fruits)
         {
-            FileHelper.StringToFile(path, freshFruits.ListToString());
+            foreach (Fruit fruit in Fruits)
+            {
+                fruit.Print(path);
+            }
         }
 
-        public FreshFruits FileToList(string path)
+        public static void SaveToFile(string path, IEnumerable<Fruit> Fruits)
         {
-            FreshFruits freshFruits = new FreshFruits();
+            foreach (Fruit fruit in Fruits)
+            {
+                fruit.Print(path);
+            }
+        }
+
+        public static FruitsBasket LoadFromFile(string path)
+        {
+            FruitsBasket freshFruits = new FruitsBasket();
             string[] fruits = FileHelper.FileToString(path).Split(new char[] { '\n' });
 
             for (int i = 0; i < fruits.Length; i++)
@@ -48,6 +64,9 @@ namespace DemoProject
             return freshFruits;
         }
 
-
+        internal static bool CheckFile(string path)
+        {
+            return File.Exists(path) && File.ReadAllText(path).Length != 0;
+        }
     }
 }

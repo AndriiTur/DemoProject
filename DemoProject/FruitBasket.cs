@@ -34,6 +34,12 @@ namespace DemoProject
             this.fFruits.AddRange(fFruits);
         }
 
+
+        public void Sort()
+        {
+            this.fFruits.Sort();
+        }
+
         public IEnumerable<Fruit> Sort(string sortedValue = "")
         {
             if (sortedValue.ToLower() == "name")
@@ -48,21 +54,6 @@ namespace DemoProject
             {
                 return FFruits.OrderBy(f => f.Name);
             }
-        }
-
-        public static string ListToString(IEnumerable<Fruit> fFruits)
-        {
-            string stringFruits = "";
-            foreach (var fruit in fFruits)
-            {
-                stringFruits += $"{fruit.Name}-{fruit.Name}\n";
-            }
-            return stringFruits;
-        }
-
-        private double ToDouble(string value)///Dopusatu!!!!!!!!!!!!!!!!!!!!
-        {
-            return double.Parse(value);
         }
 
         internal IEnumerable<Fruit> ShowFruitWithColor(List<Fruit> fFruits, string color)

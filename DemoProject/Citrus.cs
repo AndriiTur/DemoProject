@@ -12,8 +12,10 @@ namespace DemoProject
     [XmlRoot("FreshFruits")]
     public class Citrus : Fruit
     {
-        double vitaminC;
+        //Fields
+        private double vitaminC;
 
+        //Properties
         [XmlAnyAttribute]
         public double VitaminC
         {
@@ -21,18 +23,19 @@ namespace DemoProject
             {
                 return vitaminC;
             }
-            private set {}
         }
 
+        //Constructors
         public Citrus()
         {
         }
 
         public Citrus(string name, string color, double vitaminC) : base(name, color)
         {
-            VitaminC = vitaminC;
+            this.vitaminC = vitaminC;
         }
 
+        //Methods
         private bool SetVitaminC(string value)
         {
             value.Replace(',', '.');
@@ -40,11 +43,9 @@ namespace DemoProject
             value.Replace(':', '.');
             value.Replace('-', '.');
             value.Replace(' ', '.');
-            double resultValue = 0.0;
-
             try
             {
-                resultValue = double.Parse(value);
+                vitaminC = double.Parse(value);
             }
             catch (FormatException e)
             {
@@ -64,18 +65,18 @@ namespace DemoProject
                 Console.Error.WriteLine(e.Message);
                 Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
-            VitaminC = resultValue;
             return true;
         }
 
+        //Methods Inputs
         public override void Input()
         {
             bool isSetted = false;
             Console.Write("Citrus Name: ");
             Name = Console.ReadLine();
-            Console.Write($"Citrus Color {Name}: ");
+            Console.Write($"\"{Name}\" Color : ");
             Color = Console.ReadLine();
-            Console.Write("Citrus VitaminC(double): ");
+            Console.Write($"\"{Name}\" VitaminC(double): ");
             isSetted = SetVitaminC(Console.ReadLine());
 
             while (!isSetted)
@@ -95,6 +96,7 @@ namespace DemoProject
             SetVitaminC(fruit[2]);
         }
 
+        //Methods Print
         public override void Print()
         {
             Console.WriteLine($"{this}");
@@ -102,13 +104,13 @@ namespace DemoProject
 
         public override void Print(string pathToFile)
         {
-            FileHelper.StringToFile(pathToFile, $"{Name}:{Color}-{VitaminC}");
             FileHelper.SaveToFile(pathToFile, $"{Name}/{Color}/{VitaminC}");
         }
 
+        //Overrides Method ToString
         public override string ToString()
         {
-            return $"Fruit name:{this.Name} fruit color: {this.Color} concentration Vitamin C: {this.vitaminC}";
+            return $"Name:{this.Name} Color: {this.Color} Concentration Vitamin C: {this.vitaminC}";
         }
     }
 }
