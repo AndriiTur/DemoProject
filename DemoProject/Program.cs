@@ -27,7 +27,7 @@ namespace DemoProject
 
             freshFruits.Add(new Fruit("banana", "yellow"));
 
-            ShowFruitWithColor(freshFruits, "");
+            freshFruits.ShowFruitWithColor(freshFruits, "yellow");
 
             freshFruits.Sort();
 
@@ -39,7 +39,7 @@ namespace DemoProject
             }
         }
 
-        private static void ShowFruitWithColor(List<Fruit> freshFruits, string color)
+        private static void ShowFruitWithColor(FruitBasket freshFruits, string color)
         {
             foreach (Fruit fFruit in freshFruits)
             {

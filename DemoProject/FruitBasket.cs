@@ -50,14 +50,23 @@ namespace DemoProject
             }
         }
 
-        public string ListToString()
+        internal void ShowFruitWithColor(string color)
         {
-            string stringFruits = "";
+            foreach (Fruit fruit in FFruits)
+            {
+                if (fruit.Color == color)
+                {
+                    Console.WriteLine(fruit);
+                }
+            }
+        }
+
+        public void PrintToFile(string path)
+        {
             foreach (var fruit in this.fFruits)
             {
-                stringFruits += $"{fruit.Name}-{fruit.Name}\n";
+                fruit.Print(path);
             }
-            return stringFruits;
         }
 
         private double ToDouble(string value)///Dopusatu!!!!!!!!!!!!!!!!!!!!
