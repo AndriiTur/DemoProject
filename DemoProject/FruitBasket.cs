@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 
 namespace DemoProject
 {
+    [Serializable]
     public class FruitsBasket
     {
         private List<Fruit> fFruits;

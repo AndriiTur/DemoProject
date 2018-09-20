@@ -25,10 +25,10 @@ namespace DemoProject
             FruitsBasket fruitsBasket = new FruitsBasket();
             var currentDir = Directory.GetCurrentDirectory();
 
-            if (FileHelper.CheckFile(FreshFruitData))
+            if (FileHelper.CheckFile(currentDir + FreshFruitData))
             {
                 //Load Fruits from File
-                fruitsBasket = FileHelper.LoadFromFile(FreshFruitData);
+                fruitsBasket = FileHelper.LoadFromFile(currentDir + FreshFruitData);
             }
             else
             {
@@ -59,11 +59,11 @@ namespace DemoProject
             }
 
             //Sort Fruits by parameter
-            IEnumerable<Fruit> sortedFruits = fruitsBasket.Sort("color");
+            IEnumerable<Fruit> sortedFruits = fruitsBasket.Sort("");
             //fruitsBasket.Sort();
 
             //Print Sorted Fruits in File
-            FileHelper.SaveToFile(SortedFruits, sortedFruits);
+            FileHelper.SaveToFile(currentDir + SortedFruits, sortedFruits);
             //FileHelper.SaveToFile(SortedFruits, fruitsBasket.FFruits);
 
             Console.WriteLine("");
@@ -74,10 +74,17 @@ namespace DemoProject
                 fruit.Print();
             }
 
-            string fruitsBasketXML = SerializerHelper.ObjectToXml<FruitsBasket>(fruitsBasket);
+            string fruitsBasketXML = "";
+            foreach (var fr in fruitsBasket.FFruits)
+            {
+                fruitsBasketXML = SerializerHelper.ObjectToXml<Fruit>(fr);
+                Console.WriteLine(fruitsBasketXML);
+            }
+            //string fruitsBasketXML = SerializerHelper.ObjectToXml<List<Fruit>>(fruitsBasket.FFruits);
 
-            FileHelper.SaveXMLToFile(FreshFruitXML, fruitsBasketXML);
+            //FileHelper.SaveXMLToFile(currentDir + FreshFruitXML, fruitsBasketXML);
 
+            //Console.WriteLine(fruitsBasketXML);
             Console.ReadKey();
         }
     }

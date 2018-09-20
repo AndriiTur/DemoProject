@@ -9,7 +9,7 @@ namespace DemoProject
     //властивість, 
     //перевизначені методи Input() та Print().
 
-    [XmlRoot("FreshFruits")]
+    [Serializable]
     public class Citrus : Fruit
     {
         //Fields
@@ -104,7 +104,7 @@ namespace DemoProject
 
         public override void Print(string pathToFile)
         {
-            FileHelper.SaveToFile(pathToFile, $"{Name}/{Color}/{VitaminC}");
+            FileHelper.SaveToFile(pathToFile, $"{Name}:{Color}:{VitaminC}\n");
         }
 
         //Overrides Method ToString
