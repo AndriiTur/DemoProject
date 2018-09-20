@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace DemoProject
 {
+    [Serializable]
     public class FruitsBasket
     {
         private List<Fruit> fruitsColection;
