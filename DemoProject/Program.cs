@@ -22,7 +22,7 @@ namespace DemoProject
 
         static void Main(string[] args)
         {
-            FreshFruits freshFruits = new FreshFruits();
+            FruitBasket freshFruits = new FruitBasket();
             var currentDir = Directory.GetCurrentDirectory();
 
             freshFruits.Add(new Fruit("banana", "yellow"));

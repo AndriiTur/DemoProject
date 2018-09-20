@@ -7,46 +7,46 @@ using System.Xml.Serialization;
 
 namespace DemoProject
 {
-    public class FreshFruits
+    public class FruitBasket
     {
         private List<Fruit> fFruits;
 
         [XmlArray("FreshFruits"), XmlArrayItem(typeof(Fruit), ElementName = "")]
         public List<Fruit> FFruits { get => fFruits; set => fFruits = value; }
 
-        public FreshFruits()
+        public FruitBasket()
         {
             fFruits = new List<Fruit>();
         }
 
         public void Add(Fruit fruit)
         {
-            this.FFruits.Add(fruit);
+            FFruits.Add(fruit);
         }
 
         public void Remove(Fruit fruit)
         {
-            this.FFruits.Remove(fruit);
+            FFruits.Remove(fruit);
         }
 
         public void AddRank(List<Fruit> fFruits)
         {
-            this.fFruits.AddRange(fFruits);
+            FFruits.AddRange(fFruits);
         }
 
         public void Sort(string sortedValue = "")
         {
             if (sortedValue.ToLower() == "name")
             {
-                this.FFruits.OrderBy(f => f.Name);
+                FFruits.OrderBy(f => f.Name);
             }
             else if (sortedValue.ToLower() == "color")
             {
-                this.FFruits.OrderBy(f => f.Color);
+                FFruits.OrderBy(f => f.Color);
             }
             else
             {
-                this.FFruits.OrderBy(f => f.Name);
+                FFruits.OrderBy(f => f.Name);
             }
         }
 

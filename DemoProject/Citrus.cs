@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace DemoProject
@@ -28,8 +24,6 @@ namespace DemoProject
             private set {}
         }
 
-        
-
         public Citrus()
         {
         }
@@ -39,36 +33,59 @@ namespace DemoProject
             VitaminC = vitaminC;
         }
 
-        private void SetVitaminC(string value)
+        private bool SetVitaminC(string value)
         {
+            value.Replace(',', '.');
+            value.Replace('/', '.');
+            value.Replace(':', '.');
+            value.Replace('-', '.');
+            value.Replace(' ', '.');
             double resultValue = 0.0;
+
             try
             {
                 resultValue = double.Parse(value);
             }
             catch (FormatException e)
             {
+                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 Console.Error.WriteLine(e.Message);
+                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
             catch (ArgumentOutOfRangeException e)
             {
+                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 Console.Error.WriteLine(e.Message);
+                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
             catch (Exception e)
             {
+                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 Console.Error.WriteLine(e.Message);
+                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
             VitaminC = resultValue;
+            return true;
         }
 
         public override void Input()
         {
+            bool isSetted = false;
             Console.Write("Citrus Name: ");
             Name = Console.ReadLine();
             Console.Write("Citrus Color: ");
             Color = Console.ReadLine();
-            Console.Write("Citrus VitaminC: ");
-            SetVitaminC(Console.ReadLine());
+            Console.Write("Citrus VitaminC(double): ");
+            isSetted = SetVitaminC(Console.ReadLine());
+
+            while (!isSetted)
+            {
+                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Console.WriteLine("Error: \"You enter wrong value, enter again\"");
+                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Console.Write("Citrus VitaminC(double): ");
+                isSetted = SetVitaminC(Console.ReadLine());
+            }
         }
 
         public override void Input(string[] fruit)
@@ -85,7 +102,7 @@ namespace DemoProject
 
         public override void Print(string pathToFile)
         {
-            FileHelper.StringToFile(pathToFile, $"{Name}/{Color}/{VitaminC}");
+            FileHelper.SaveToFile(pathToFile, $"{Name}/{Color}/{VitaminC}");
         }
 
         public override string ToString()

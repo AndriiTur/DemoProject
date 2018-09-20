@@ -25,7 +25,7 @@ namespace DemoProject
             }
             set
             {
-                name = value;
+                name = value.ToLower();
             }
         }
 
@@ -48,8 +48,8 @@ namespace DemoProject
 
         public Fruit(string name, string color)
         {
-            this.Name = name;
-            this.Color = color;
+            Name = name;
+            Color = color;
         }
 
         public virtual void Input()
@@ -73,12 +73,12 @@ namespace DemoProject
 
         public virtual void Print(string pathToFile)
         {
-            FileHelper.StringToFile(pathToFile, $"{Name}/{Color}");
+            FileHelper.SaveToFile(pathToFile, $"{Name}/{Color}");
         }
 
         public override string ToString()
         {
-            return $"Fruit name:{this.name} fruit color: {this.color}";
+            return $"Fruit name:{Name} fruit color: {Color}";
         }
     }
 }

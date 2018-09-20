@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Citrus.cs" />
     <Compile Include="FileHelper.cs" />
-    <Compile Include="FreshFruits.cs" />
+    <Compile Include="FruitBasket.cs" />
     <Compile Include="Fruit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

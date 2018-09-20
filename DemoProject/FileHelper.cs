@@ -13,19 +13,14 @@ namespace DemoProject
                 return "";
         }
 
-        public static void StringToFile(string path, string str)
+        public static void SaveToFile(string path, string str)
         {
             File.AppendAllText(path, str);
         }
 
-        public void ListToFile(string path, FreshFruits freshFruits)
+        public FruitBasket LoadFromFile(string path)
         {
-            FileHelper.StringToFile(path, freshFruits.ListToString());
-        }
-
-        public FreshFruits FileToList(string path)
-        {
-            FreshFruits freshFruits = new FreshFruits();
+            FruitBasket freshFruits = new FruitBasket();
             string[] fruits = FileHelper.FileToString(path).Split(new char[] { '\n' });
 
             for (int i = 0; i < fruits.Length; i++)
@@ -33,16 +28,18 @@ namespace DemoProject
                 string[] fruit = fruits[i].Split(new char[] { '-' });
                 if (fruit.Length == 2)
                 {
-                    freshFruits.Add(new Fruit(fruit[0], fruit[1]));
+                    Fruit newFruit = new Fruit();
+                    newFruit.Input(fruit);
+                    freshFruits.Add(newFruit);
                 }
                 else if (fruit.Length == 3)
                 {
-                    freshFruits.Add(new Citrus(fruit[0], fruit[1], ToDouble(fruit[2])));
+                    Fruit newFruit = new Citrus();
+                    newFruit.Input(fruit);
+                    freshFruits.Add(newFruit);
                 }
             }
             return freshFruits;
         }
-
-
     }
 }
