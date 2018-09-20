@@ -1,64 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace DemoProject
 {
     public class FruitsBasket
     {
-        private List<Fruit> fFruits;
+        private List<Fruit> fruitsColection;
 
-        [XmlArray("FreshFruits"), XmlArrayItem(typeof(Fruit), ElementName = "FF")]
-        public List<Fruit> FFruits { get => fFruits; set => fFruits = value; }
+        public List<Fruit> FruitsColection { get => fruitsColection; set => fruitsColection = value; }
 
         public FruitsBasket()
         {
-            fFruits = new List<Fruit>();
+            fruitsColection = new List<Fruit>();
         }
 
         public void Add(Fruit fruit)
         {
-            this.FFruits.Add(fruit);
+            this.FruitsColection.Add(fruit);
         }
 
         public void Remove(Fruit fruit)
         {
-            this.FFruits.Remove(fruit);
+            this.FruitsColection.Remove(fruit);
         }
 
         public void AddRank(List<Fruit> fFruits)
         {
-            this.fFruits.AddRange(fFruits);
+            this.fruitsColection.AddRange(fFruits);
         }
-
 
         public void Sort()
         {
-            this.fFruits.Sort();
+            this.fruitsColection.Sort();
         }
 
         public IEnumerable<Fruit> Sort(string sortedValue = "")
         {
             if (sortedValue.ToLower() == "name")
             {
-                return FFruits.OrderBy(f => f.Name);
+                return FruitsColection.OrderBy(f => f.Name);
             }
             else if (sortedValue.ToLower() == "color")
             {
-                return FFruits.OrderBy(f => f.Color).ThenBy(f => f.Name);
+                return FruitsColection.OrderBy(f => f.Color).ThenBy(f => f.Name);
             }
             else
             {
-                return FFruits.OrderBy(f => f.Name);
+                return FruitsColection.OrderBy(f => f.Name);
             }
         }
 
         internal IEnumerable<Fruit> ShowFruitWithColor(List<Fruit> fFruits, string color)
         {
-            return this.FFruits.Where(f => f.Color == color.ToLower());
+            return this.FruitsColection.Where(f => f.Color == color.ToLower());
         }
     }
 }

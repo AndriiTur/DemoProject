@@ -9,14 +9,14 @@ namespace DemoProject
     //властивість, 
     //перевизначені методи Input() та Print().
 
-    [XmlRoot("FreshFruits")]
+    [Serializable]
     public class Citrus : Fruit
     {
         //Fields
         private double vitaminC;
 
         //Properties
-        [XmlAnyAttribute]
+        [XmlAttribute]
         public double VitaminC
         {
             get
@@ -39,21 +39,11 @@ namespace DemoProject
         private bool SetVitaminC(string value)
         {
             value.Replace(',', '.');
-            value.Replace('/', '.');
-            value.Replace(':', '.');
-            value.Replace('-', '.');
-            value.Replace(' ', '.');
             try
             {
                 vitaminC = double.Parse(value);
             }
             catch (FormatException e)
-            {
-                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                Console.Error.WriteLine(e.Message);
-                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            }
-            catch (ArgumentOutOfRangeException e)
             {
                 Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 Console.Error.WriteLine(e.Message);
@@ -96,21 +86,22 @@ namespace DemoProject
             SetVitaminC(fruit[2]);
         }
 
-        //Methods Print
+        //Method Print to Console
         public override void Print()
         {
             Console.WriteLine($"{this}");
         }
 
+        //Method Print to Console
         public override void Print(string pathToFile)
         {
-            FileHelper.SaveToFile(pathToFile, $"{Name}/{Color}/{VitaminC}");
+            FileHelper.SaveToFile(pathToFile, $"{Name}/{Color}/{VitaminC}\n");
         }
 
         //Overrides Method ToString
         public override string ToString()
         {
-            return $"Name:{this.Name} Color: {this.Color} Concentration Vitamin C: {this.vitaminC}";
+            return $"Name: {this.Name} Color: {this.Color} - Concentration Vitamin C: {this.vitaminC}";
         }
     }
 }

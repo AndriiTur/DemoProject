@@ -14,11 +14,6 @@ namespace DemoProject
                 return "";
         }
 
-        public static void SaveXMLToFile(string path, string str)
-        {
-            File.WriteAllText(path, str);
-        }
-
         public static void SaveToFile(string path, string str)
         {
             File.AppendAllText(path, str);
@@ -32,6 +27,7 @@ namespace DemoProject
             }
         }
 
+        
         public static void SaveToFile(string path, IEnumerable<Fruit> Fruits)
         {
             foreach (Fruit fruit in Fruits)
@@ -40,33 +36,47 @@ namespace DemoProject
             }
         }
 
+        /// <summary>
+        /// Load Fruits from File
+        /// </summary>
+        /// <param name="path">Path to file</param>
+        /// <returns>FruitsBasket(colletion)</returns>
         public static FruitsBasket LoadFromFile(string path)
         {
             FruitsBasket freshFruits = new FruitsBasket();
             string[] fruits = FileHelper.FileToString(path).Split(new char[] { '\n' });
 
-            for (int i = 0; i < fruits.Length; i++)
+            using (StreamReader sr = new StreamReader(path))
             {
-                string[] fruit = fruits[i].Split(new char[] { '-',':' });
-                if (fruit.Length == 2)
+                while (!sr.EndOfStream)
                 {
-                    Fruit newFruit = new Fruit();
-                    newFruit.Input(fruit);
-                    freshFruits.Add(newFruit);
-                }
-                else if (fruit.Length == 3)
-                {
-                    Fruit newFruit = new Citrus();
-                    newFruit.Input(fruit);
-                    freshFruits.Add(newFruit);
+                    string[] fruit = sr.ReadLine().Split(new char[] { '-', '/' });
+                    if (fruit.Length == 2)
+                    {
+                        Fruit newFruit = new Fruit();
+                        newFruit.Input(fruit);
+                        freshFruits.Add(newFruit);
+                    }
+                    else if (fruit.Length == 3)
+                    {
+                        Fruit newFruit = new Citrus();
+                        newFruit.Input(fruit);
+                        freshFruits.Add(newFruit);
+                    }
                 }
             }
+
             return freshFruits;
         }
 
+        /// <summary>
+        /// Check File Exists
+        /// </summary>
+        /// <param name="path">Path to file</param>
+        /// <returns>bool (true/false)</returns>
         internal static bool CheckFile(string path)
         {
-            return File.Exists(path) && File.ReadAllText(path).Length != 0;
+            return File.Exists(path) && new FileInfo(path).Length > 0;
         }
     }
 }

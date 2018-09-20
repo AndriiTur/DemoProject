@@ -10,7 +10,8 @@ namespace DemoProject
     //властивості для полів, 
     //перевизначити метод ToString(). 
 
-    [XmlRoot("FreshFruits")]
+    [Serializable]
+    [XmlInclude(typeof(Citrus))]
     public class Fruit: IComparable<Fruit>
     {
         //Fields
@@ -18,7 +19,7 @@ namespace DemoProject
         private string color;
 
         //Properties
-        [XmlAnyAttribute]
+        [XmlAttribute]
         public string Name
         {
             get
@@ -31,7 +32,7 @@ namespace DemoProject
             }
         }
 
-        [XmlAnyAttribute]
+        [XmlAttribute]
         public string Color
         {
             get
@@ -78,12 +79,12 @@ namespace DemoProject
 
         public virtual void Print(string pathToFile)
         {
-            FileHelper.SaveToFile(pathToFile, $"{Name}/{Color}");
+            FileHelper.SaveToFile(pathToFile, $"{Name}/{Color}\n");
         }
 
         public override string ToString()
         {
-            return $"Name:{Name} Color: {Color}";
+            return $"Name: {Name} Color: {Color}";
         }
 
         public int CompareTo(Fruit other)

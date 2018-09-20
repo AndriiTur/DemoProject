@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -7,14 +8,25 @@ namespace DemoProject
 {
     internal class SerializerHelper
     {
+        public static void SerializeXml(FruitsBasket fb, string fileName)
+        {
+            //XmlSerializer xmlFormat = new XmlSerializer(typeof(List<Fruit>));
+            using (FileStream fileStream = new FileStream(fileName, FileMode.Create))
+            {
+                XmlSerializer serializer = new XmlSerializer(fb.GetType());
+                serializer.Serialize(fileStream, fb);
+                //xmlFormat.Serialize(fileStream, fruits);
+            }
+        }
+
         internal static string ObjectToXml<T>(T obj)
         {
-            string resultXML = String.Empty;
+            var resultXML = String.Empty;
             XmlSerializer serializer = null;
             try
             {
                 serializer = new XmlSerializer(typeof(T));
-                using (StringWriter stringWriter = new StringWriter())
+                using (var stringWriter = new StringWriter())
                 {
                     XmlWriterSettings xmlWriterSettings = new XmlWriterSettings
                     {
