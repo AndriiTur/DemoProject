@@ -23,6 +23,10 @@ namespace DemoProject
             {
                 return vitaminC;
             }
+            set
+            {
+                vitaminC = value;
+            }
         }
 
         //Constructors

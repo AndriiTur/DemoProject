@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DemoProject
@@ -51,7 +52,7 @@ namespace DemoProject
             }
         }
 
-        internal IEnumerable<Fruit> ShowFruitWithColor(List<Fruit> fFruits, string color)
+        public IEnumerable<Fruit> ShowFruitWithColor(List<Fruit> fFruits, string color)
         {
             return this.FruitsColection.Where(f => f.Color == color.ToLower());
         }

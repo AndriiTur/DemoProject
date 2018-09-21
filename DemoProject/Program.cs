@@ -19,11 +19,11 @@ namespace DemoProject
         public const string FreshFruitData = @"\FruitsBasketData.txt";
         public const string SortedFruits = @"\sortedFruits.txt";
         public const string FreshFruitXML = @"\FruitsBasket.xml";
-
+        public static string currentDir = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
         static void Main(string[] args)
         {
             FruitsBasket fruitsBasket = new FruitsBasket();
-            var currentDir = Directory.GetCurrentDirectory();
+            Console.WriteLine(currentDir);
 
             if (FileHelper.CheckFile(currentDir + FreshFruitData))
             {
@@ -107,7 +107,7 @@ namespace DemoProject
                 throw new Exception("XML Parsing Error");
 
             Console.Write("\nShow deserialize Fruits\n");
-            foreach (var fruit in sortedFruits)
+            foreach (var fruit in deserializeFruits.FruitsColection)
             {
                 fruit.Print();
             }
